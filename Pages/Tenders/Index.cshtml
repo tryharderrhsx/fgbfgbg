@@ -1,0 +1,21 @@
+﻿@page
+@model InternetTenderService.Pages.Tenders.IndexModel
+@{
+    ViewData["Title"] = "Все тендеры";
+}
+<h2>Все тендеры</h2>
+<div class="row row-cols-1 row-cols-md-2 g-4">
+  @foreach (var t in Model.Tenders)
+  {
+    <div class="col">
+      <div class="card tender-card h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">@t.Title</h5>
+          <p class="card-text flex-grow-1">@t.Description?.Substring(0, Math.Min(t.Description.Length,100))...</p>
+          <p class="text-muted small">Создано: @t.CreatedAt.ToLocalTime().ToString("g")</p>
+          <a asp-page="Details" asp-route-id="@t.Id" class="btn btn-primary mt-auto">Детали</a>
+        </div>
+      </div>
+    </div>
+  }
+</div>

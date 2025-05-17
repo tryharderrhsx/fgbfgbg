@@ -1,0 +1,30 @@
+﻿@page
+@model InternetTenderService.Pages.Tenders.CreateModel
+@{
+    ViewData["Title"] = "Создать тендер";
+}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <h2 class="mb-4">Новый тендер</h2>
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="Tender.Title" class="form-label"></label>
+        <input asp-for="Tender.Title" class="form-control" />
+        <span asp-validation-for="Tender.Title" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Tender.Description" class="form-label"></label>
+        <textarea asp-for="Tender.Description" class="form-control" rows="5"></textarea>
+        <span asp-validation-for="Tender.Description" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="image" class="form-label">Изображение</label>
+        <input type="file" class="form-control" name="Image" />
+    </div>
+    <button type="submit" class="btn btn-primary">Создать</button>
+    <a asp-page="Index" class="btn btn-secondary ms-2">Отмена</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

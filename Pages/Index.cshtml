@@ -1,0 +1,21 @@
+﻿@page
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Главная";
+    var isAuthenticated = HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+}
+
+<div class="text-center mt-5">
+    <h1 class="display-4">Добро пожаловать!</h1>
+    <p class="lead">Управляйте тендерами легко и удобно.</p>
+
+    @if (!isAuthenticated)
+    {
+        <div class="mt-4">
+            <a asp-page="/Account/Login" class="btn btn-primary btn-lg me-2">Вход</a>
+            <a asp-page="/Account/Register" class="btn btn-outline-primary btn-lg">Регистрация</a>
+        </div>
+    }
+</div>

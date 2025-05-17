@@ -1,0 +1,49 @@
+﻿@page "{id:int}"
+@model InternetTenderService.Pages.Tenders.DetailsModel
+@{
+    ViewData["Title"] = "Детали тендера";
+    var userId = HttpContext.Session.GetInt32("UserId");
+    bool isOwner = userId == Model.Tender.OwnerId;
+}
+<h2>Детали тендера</h2>
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title">@Model.Tender.Title</h5>
+    <p class="card-text">@Model.Tender.Description</p>
+    <p class="text-muted small">Создано: @Model.Tender.CreatedAt.ToLocalTime().ToString("g")</p>
+  </div>
+</div>
+<h3>Заявки</h3>
+@if (Model.Tender.Bids.Any())
+{
+  <div class="row row-cols-1 row-cols-sm-2 g-3">
+    @foreach (var bid in Model.Tender.Bids)
+    {
+      <div class="col">
+        <div class="card bid-card">
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2">@bid.Bidder.Username</h6>
+            <p class="card-text">Сумма: @bid.Amount.ToString("C")</p>
+            <p class="text-muted small">@bid.PlacedAt.ToLocalTime().ToString("g")</p>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+}
+else { <p>Заявок пока нет.</p> }
+@if (!isOwner && userId != null)
+{
+  <h4 class="mt-4">Подать заявку</h4>
+  <form method="post" class="bid-form">
+    <div class="mb-3">
+      <label asp-for="BidAmount" class="form-label"></label>
+      <input asp-for="BidAmount" class="form-control" />
+      <span asp-validation-for="BidAmount" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Отправить</button>
+  </form>
+}
+else if (userId == null)
+{ <p><a asp-page="/Account/Login">Войдите</a> для подачи заявки.</p> }
+@section Scripts {<partial name="_ValidationScriptsPartial" />}

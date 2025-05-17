@@ -1,0 +1,24 @@
+@page "{id:int}"
+@model InternetTenderService.Pages.Tenders.EditModel
+@{
+    ViewData["Title"] = "Редактировать тендер";
+}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <h2>Редактировать тендер</h2>
+    <form method="post">
+      <div class="mb-3">
+        <label asp-for="Tender.Title" class="form-label"></label>
+        <input asp-for="Tender.Title" class="form-control" />
+        <span asp-validation-for="Tender.Title" class="text-danger"></span>
+      </div>
+      <div class="mb-3">
+        <label asp-for="Tender.Description" class="form-label"></label>
+        <textarea asp-for="Tender.Description" class="form-control" rows="5"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Сохранить</button>
+      <a asp-page="Index" class="btn btn-secondary ms-2">Отмена</a>
+    </form>
+  </div>
+</div>
+@section Scripts {<partial name="_ValidationScriptsPartial" />}
